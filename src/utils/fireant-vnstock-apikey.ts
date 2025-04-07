@@ -18,11 +18,10 @@ export async function getApiKeyFromFireant() {
 
     await page.on('request', async request => {
       const url = request.url();
-
-      if (url.includes('api') || url.includes('data')) {
+      if (url.includes('restv2.fireant.vn') || url.includes('data')) {
         const headers = request.headers();
-        if (headers['Authorization']) {
-          apiKey = headers['Authorization'];
+        if (headers['authorization']) {
+          apiKey = headers['authorization'];
           resolvePromise(apiKey);
         }
       }
@@ -63,24 +62,11 @@ export async function handleResponseFireant(apiKey: string, url: string, params:
     });
     if (response.status === 200) {
       const data = response.data;
-      if (data?.success === true) {
-        return {
-          success: true,
-          data: data.data
-        };
-      }
-      if (data?.code === 403) {
-        const newApiKey = await getApiKeyFromFireant();
-        if (newApiKey) {
-          return handleResponseFireant(newApiKey, urlApi, params);
-        }
-      }
-      else {
-        return {
-          success: false,
-          data
-        };
-      }
+
+      return {
+        success: true,
+        data: data
+      };
     }
     return {
       success: false,

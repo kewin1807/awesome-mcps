@@ -25,3 +25,8 @@ export enum EPosSide {
   Long = 'long',
   Short = 'short',
 }
+
+export enum EFinancialStatementPeriod {
+  Q = 'Q',
+  Y = 'Y',
+}

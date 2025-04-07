@@ -4,6 +4,8 @@ import express from "express";
 import { SSEServerTransport } from "@modelcontextprotocol/sdk/server/sse.js";
 import { Readable } from "stream";
 import { IncomingMessage } from "http";
+import coinankService from "./services/coinank.service";
+import fireantService from "./services/fireant.service";
 
 async function startStdioServer() {
   const transport = new StdioServerTransport();
@@ -75,12 +77,14 @@ async function startHttpServer() {
     }
   });
 
-  app.listen(process.env.PORT || 8001, () => {
-    console.log(`Server is running on port ${process.env.PORT || 8001}`);
+  app.listen(process.env.PORT || 8002, () => {
+    console.log(`Server is running on port ${process.env.PORT || 8002}`);
   });
 }
 
 (async () => {
+  await coinankService.initializeApiKey();
+  await fireantService.initializeApiKey();
   const isStdio = process.argv.includes("--stdio");
   if (isStdio) {
     await startStdioServer();

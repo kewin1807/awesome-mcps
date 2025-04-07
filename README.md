@@ -9,6 +9,7 @@ This repository contains MCP tools that provide real-time crypto market data ana
 - Liquidation heatmaps and maps from various exchanges
 - HyperLiquid whale activity tracking
 - Position and PnL analysis for HyperLiquid accounts
+- Vietnam Stock Market data analysis via Fireant
 
 ## Installation
 
@@ -77,6 +78,46 @@ yarn start
   - Parameters:
     - `address`: HyperLiquid wallet address
 
+### Vietnam Stock Market Tools
+
+- **get_official_posts_vnstock**: Get the list of official posts from Vietnam stock market.
+  - Parameters:
+    - `offset` (optional): The offset value
+    - `limit` (optional): Number of results to return
+    - `symbol` (optional): Filter by stock symbol
+
+- **get_user_posts_vnstock**: Get the list of user posts from Vietnam stock market.
+  - Parameters:
+    - `offset` (optional): The offset value
+    - `limit` (optional): Number of results to return
+    - `symbol` (optional): Filter by stock symbol
+
+- **get_fundamental_analysis_vnstock**: Get fundamental analysis data of a Vietnam stock ticker.
+  - Parameters:
+    - `symbol`: The stock symbol (e.g., VNM, FPT, VIC)
+
+- **get_company_profile_vnstock**: Get company profile information of a Vietnam stock ticker.
+  - Parameters:
+    - `symbol`: The stock symbol (e.g., VNM, FPT, VIC)
+
+- **get_major_holders_vnstock**: Get major shareholders information of a Vietnam stock ticker.
+  - Parameters:
+    - `symbol`: The stock symbol (e.g., VNM, FPT, VIC)
+
+- **get_historical_price_vnstock**: Get historical price data of a Vietnam stock ticker.
+  - Parameters:
+    - `symbol`: The stock symbol (e.g., VNM, FPT, VIC)
+    - `startDate` (optional): The start date in YYYY-MM-DD format
+    - `endDate` (optional): The end date in YYYY-MM-DD format
+    - `offset` (optional): The offset value
+    - `limit` (optional): Number of records to return
+
+- **get_financial_statement_vnstock**: Get financial statement data of a Vietnam stock ticker.
+  - Parameters:
+    - `symbol`: The stock symbol (e.g., VNM, FPT, VIC)
+    - `type`: Financial statement period - 'Q' (quarterly) or 'Y' (yearly)
+    - `count` (optional): Number of records to return
+
 ## Implementation Details
 
-The tools connect to various crypto data providers, including Coinank's API for market data. The API key is automatically fetched during runtime using a headless browser. 
+The tools connect to various crypto data providers, including Coinank's API for market data and Fireant for Vietnam stock market data. The API keys are automatically fetched during runtime using a headless browser. 
