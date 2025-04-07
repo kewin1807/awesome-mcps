@@ -3,6 +3,7 @@ import { z } from "zod";
 import { EExchangeName, EFinancialStatementPeriod, EHeatMapInterval, ELiquidationMapInterval } from "./constants/enums";
 import coinankService from "./services/coinank.service";
 import fireantService from "./services/fireant.service";
+import tokenInfoService from "./services/token-info.service";
 
 const server = new McpServer({
   name: "awesomemcp",
@@ -126,6 +127,45 @@ server.tool(
     return { content: [{ type: "text", text: JSON.stringify(data) }] };
   }
 );
+
+// Token Info tools
+server.tool(
+  "get_solana_token_info",
+  "Get the token info of a specific address and check rug pull risk on the Solana blockchain.",
+  {
+    address: z.string().describe("The address on Solana to query")
+  },
+  async (params) => {
+    const data = await tokenInfoService.getTokenInfo(params.address);
+    return { content: [{ type: "text", text: JSON.stringify(data) }] };
+  }
+);
+
+server.tool(
+  "get_solana_token_price",
+  "Get the price of a specific token on the Solana blockchain.",
+  {
+    address: z.string().describe("The address on Solana to query")
+  },
+  async (params) => {
+    const data = await tokenInfoService.getPriceSolanaToken(params.address);
+    return { content: [{ type: "text", text: JSON.stringify(data) }] };
+  }
+);
+
+server.tool(
+  "get_solana_bubble_map",
+  "Get the bubble map token's holders on the Solana blockchain. We can identify the token's holders and their transaction history and check the healthy distribution of the token.",
+  {
+    address: z.string().describe("The address on Solana to query"),
+    chain: z.string().describe("The chain name, e.g: sol, eth, bsc, default is sol")
+  },
+  async (params) => {
+    const data = await tokenInfoService.getBubbleMap(params.address, params.chain);
+    return { content: [{ type: "text", text: JSON.stringify(data) }] };
+  }
+);
+
 
 // Fireant tools for Vietnam stock market
 server.tool(
